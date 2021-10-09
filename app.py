@@ -1,35 +1,27 @@
-from flask import  Flask,redirect,url_for
+import numpy as np
+from flask import Flask, request, jsonify, render_template
+import pickle
 
-### WSGI APPLICATION
-app=Flask(__name__)
+app = Flask(__name__)
+model = pickle.load(open('model.pkl', 'rb'))
 
-## DECORATOR
 @app.route('/')
-def welcome():
-    return "welcome flask"
+def home():
+    return render_template('index.html')
 
-@app.route('/above')
-def welcome1():
-    return "above"
-@app.route('/below')
-def welcome2():
-    return "below"
+@app.route('/predict',methods=['POST'])
+def predict():
+    '''
+    For rendering results on HTML GUI
+    '''
+    int_features = [int(x) for x in request.form.values()]
+    final_features = [np.array(int_features)]
+    prediction = model.predict(final_features)
 
-@app.route('/test/<int:score>')
-def members(score):
-    return " please welcome flask guys  " + str(score)
+    output = round(prediction[0], 2)
 
-@app.route('/check/<int:score>')
-def results(score):
-    result=""
-    if score>50:
-        result=" above"
-    else:
-        result=" below"
-    return redirect(url_for())
+    return render_template('index.html', prediction_text='Employee Salary should be $ {}'.format(output))
 
 
-
-##
-if __name__=='__main__':
+if __name__ == "__main__":
     app.run(debug=True)
