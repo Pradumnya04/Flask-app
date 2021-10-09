@@ -1,20 +1,35 @@
 <!DOCTYPE html>
-<html>
-<body>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>ML API</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+  
+</head>
 
-<h2>HTML Forms</h2>
-<form action="/submit" method='post'>
-    <label for="Science">Science:</label><br>
-    <input type="text" id="science" name="science" value="0"><br>
-    <label for="Maths">Maths Score:</label><br>
-    <input type="text" id="maths" name="maths" value="0"><br><br>
-    <label for="C ">C:</label><br>
-    <input type="text" id="c" name="c" value="0"><br><br>
-    <label for="datascience">Data Science:</label><br>
-    <input type="text" id="datascience" name="datascience" value="0"><br><br>
-    <input type="submit" value="Submit">
-  </form> 
-<p>If you click the "Submit" button, the form-data will be sent to a page called "/submit".</p>
+<body>
+ <div class="login">
+	<h1>Predict Salary Analysis</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+    	<input type="text" name="experience" placeholder="Experience" required="required" />
+        <input type="text" name="test_score" placeholder="Test Score" required="required" />
+		<input type="text" name="interview_score" placeholder="Interview Score" required="required" />
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+
+   <br>
+   <br>
+   {{ prediction_text }}
+
+ </div>
+
 
 </body>
 </html>
